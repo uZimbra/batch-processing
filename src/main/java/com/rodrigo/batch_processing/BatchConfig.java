@@ -82,40 +82,6 @@ public class BatchConfig {
                 .build();
     }
 
-    @Bean
-    public JpaCursorItemReader<FileHeader> cardReader() {
-//        var sql = new String("select fh.*, sh.*, bi.* from file_header fh " +
-//                "left join statement_header sh ON fh.id = sh.file_id " +
-//                "left join balance_info bi ON fh.id = bi.file_id");
-
-        var sql = "SELECT fh FROM FileHeader fh";
-
-        return new JpaCursorItemReaderBuilder<FileHeader>()
-                .name("jpaCursorItemReader")
-                .entityManagerFactory(entityManagerFactory)
-                .queryString(sql)
-                .build();
-
-//        return new JdbcCursorItemReaderBuilder<FileHeader>()
-//                .name("listCardsReader")
-//                .
-//                .sql(sql)
-//                .rowMapper((rs, rowNum) -> {
-//                    var fh = new FileHeader();
-//
-//                    fh.setId(rs.getLong("id"));
-//                    fh.setVariant(rs.getInt("variant"));
-//                    fh.setRecordType(rs.getInt("record_type"));
-//                    fh.setProcessingDate(rs.getInt("processing_date"));
-//                    fh.setBatchNumber(rs.getInt("batch_number"));
-//                    fh.setProduct(rs.getInt("product"));
-//                    fh.setProductDescription(rs.getString("product_description"));
-//                    fh.setPrintingWay(rs.getInt("printing_way"));
-//
-//                    return fh;
-//                })
-//                .build();
-    }
 
 //    @Bean
 //    public ItemProcessor<FileHeader, FileHeader> cardProcessor() {
