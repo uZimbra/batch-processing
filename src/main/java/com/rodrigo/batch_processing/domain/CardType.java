@@ -16,6 +16,6 @@ public class CardType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer product;
-    private Integer variant;
-    private String description;
+    private Integer account;
+    private String type;
 }
