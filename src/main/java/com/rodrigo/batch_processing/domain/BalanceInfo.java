@@ -5,46 +5,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BalanceInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long fileId;
-
+    private Long invoiceId;
     private Integer recordType;
-    private String recordSubType;
+    private String content;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getFileId() {
-        return fileId;
-    }
-
-    public void setFileId(Long fileId) {
-        this.fileId = fileId;
-    }
-
-    public Integer getRecordType() {
-        return recordType;
-    }
-
-    public void setRecordType(Integer recordType) {
-        this.recordType = recordType;
-    }
-
-    public String getRecordSubType() {
-        return recordSubType;
-    }
-
-    public void setRecordSubType(String recordSubType) {
-        this.recordSubType = recordSubType;
-    }
 }

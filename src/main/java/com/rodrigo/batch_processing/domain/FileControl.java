@@ -5,21 +5,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Builder
-public class FileHeader {
+@NoArgsConstructor
+@AllArgsConstructor
+public class FileControl {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer variant;
-    private Integer recordType;
-    private Integer processingDate;
-    private Integer batchNumber;
-    private Integer product;
-    private String productDescription;
-    private Integer printingWay;
+    private Long product;
+    private Long variant;
+    private String fileName;
+    private String status;
+
 }

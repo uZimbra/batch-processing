@@ -1,4 +1,5 @@
-//package com.rodrigo.batch_processing.seeders;
+package com.rodrigo.batch_processing.tests.seeders;
+// package com.rodrigo.batch_processing.config.seeders;
 //
 //import org.hibernate.MappingException;
 //import org.hibernate.dialect.Dialect;

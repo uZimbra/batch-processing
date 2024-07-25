@@ -1,4 +1,4 @@
-package com.rodrigo.batch_processing.reader;
+package com.rodrigo.batch_processing.tests.reader;
 
 import com.rodrigo.batch_processing.domain.CardType;
 import org.springframework.batch.item.file.FlatFileItemReader;
