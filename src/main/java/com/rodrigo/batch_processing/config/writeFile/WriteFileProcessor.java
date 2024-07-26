@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
+import org.springframework.batch.core.annotation.OnProcessError;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -40,26 +41,24 @@ public class WriteFileProcessor implements ItemProcessor<Invoice, Invoice> {
     var byteArrayOutputStream = new ByteArrayOutputStream();
 
     try (Writer writer = new OutputStreamWriter(byteArrayOutputStream)) {
-      if (item.getStatementHeader().getContent().contains("error")) {
-        writer.close();
-        throw new Exception("message with error");
-      }
+      // if (item.getStatementHeader().getContent().contains("error")) {
+      // writer.close();
+      // throw new Exception("message with error");
+      // }
       writer.append(item.getStatementHeader().getRecordType().toString());
       writer.append(item.getStatementHeader().getRecordType().toString());
       writer.append(item.getStatementHeader().getContent());
       writer.append(System.lineSeparator());
 
       for (BalanceInfo bi : item.getBalanceInfo()) {
-        if (bi.getContent().contains("error")) {
-          writer.close();
-          throw new Exception("message with error");
-        }
+        // if (bi.getContent().contains("error")) {
+        // writer.close();
+        // throw new Exception("message with error");
+        // }
         writer.append(bi.getRecordType().toString());
         writer.append(bi.getContent());
         writer.append(System.lineSeparator());
       }
-
-      writer.close();
     } catch (Exception ex) {
       throw new WriteFileException("Fail in data validation, " + ex.getMessage());
     }
@@ -73,13 +72,16 @@ public class WriteFileProcessor implements ItemProcessor<Invoice, Invoice> {
       var fileWriter = new FileWriter(file, true);
       fileWriter.append(byteArrayOutputStream.toString());
       fileWriter.close();
-
     } catch (Exception ex) {
-      log.warn("Ocorreu um erro para processar a fatura: {}", item.getStatementHeader().getId(), ex);
       throw new WriteFileException("Fail to read or write file, " + ex.getMessage());
     }
 
     return item;
+  }
+
+  @OnProcessError
+  public void OnProcessError(@NonNull Invoice item, Exception ex) {
+    log.warn("Ocorreu um erro para processar a fatura: {}", item.getStatementHeader().getId(), ex);
   }
 
 }

@@ -43,4 +43,8 @@ public class FileUtils {
     return new File(String.valueOf(Paths.get("output").resolve(filename)));
   }
 
+  public static File[] listFilesInOutputDirectory() {
+    return new File(Paths.get("output").toFile().getAbsolutePath()).listFiles();
+  }
+
 }

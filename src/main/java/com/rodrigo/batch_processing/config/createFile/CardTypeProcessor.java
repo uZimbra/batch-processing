@@ -29,7 +29,8 @@ public class CardTypeProcessor implements ItemProcessor<CardType, FileControl> {
 
   @Override
   public FileControl process(@NonNull CardType item) throws Exception {
-    var hasInvoicesToProcess = repository.findInvoices(processingDate, item.getProduct(), item.getVariant());
+    var hasInvoicesToProcess = repository.findIfHasInvoicesToProcess(processingDate, item.getProduct(),
+        item.getVariant());
 
     if (hasInvoicesToProcess != null) {
       FileUtils.checkIfFileExists(item, batchId, processingDate.toString());

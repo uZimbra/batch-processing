@@ -25,7 +25,7 @@ public class UpdateFileControlProcessor implements ItemProcessor<FileControl, Fi
 
   @Override
   public FileControl process(@NonNull FileControl item) {
-    var invoice = statementHeaderRepository.findInvoicesNotProcessed(processingDate, item.getProduct(),
+    var invoice = statementHeaderRepository.findIfHasInvoicesToProcess(processingDate, item.getProduct(),
         item.getVariant());
 
     if (invoice != null) {

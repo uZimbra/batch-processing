@@ -19,16 +19,16 @@ public class CreateFileStep {
 
   @Bean("CreateFileStep")
   public Step createFileStep(
-      @Qualifier("CardTypeReader") JdbcCursorItemReader<CardType> cardTypeReader,
-      CardTypeProcessor cardTypeProcessor,
-      @Qualifier("FileControlWriter") JdbcBatchItemWriter<FileControl> fileControlWriter) {
+      @Qualifier("CardTypeReader") JdbcCursorItemReader<CardType> reader,
+      CardTypeProcessor processor,
+      @Qualifier("FileControlWriter") JdbcBatchItemWriter<FileControl> writer) {
     return stepBuilderFactory
         .get("createFileStep")
         .allowStartIfComplete(true)
         .<CardType, FileControl>chunk(1)
-        .reader(cardTypeReader)
-        .processor(cardTypeProcessor)
-        .writer(fileControlWriter)
+        .reader(reader)
+        .processor(processor)
+        .writer(writer)
         .build();
   }
 

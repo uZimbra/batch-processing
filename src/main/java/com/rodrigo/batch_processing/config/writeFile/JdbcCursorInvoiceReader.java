@@ -5,17 +5,18 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.lang.NonNull;
 
 public class JdbcCursorInvoiceReader extends JdbcCursorItemReader<Invoice> implements StepExecutionListener {
 
   @Override
-  public void beforeStep(StepExecution stepExecution) {
+  public void beforeStep(@NonNull StepExecution stepExecution) {
     var processingDate = Long.parseUnsignedLong(stepExecution.getJobParameters().getString("processingDate"));
     setPreparedStatementSetter(ps -> ps.setLong(1, processingDate));
   }
 
   @Override
-  public ExitStatus afterStep(StepExecution stepExecution) {
+  public ExitStatus afterStep(@NonNull StepExecution stepExecution) {
     return null;
   }
 

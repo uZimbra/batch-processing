@@ -9,12 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StatementHeaderRepository extends JpaRepository<StatementHeader, Long> {
 
-        @Query(value = "SELECT 1 FROM statement_header sh WHERE processing_date = :processingDate AND product = :product AND variant = :variant LIMIT 1", nativeQuery = true)
-        Integer findInvoices(@Param("processingDate") Long date, @Param("product") Long product,
-                        @Param("variant") Long variant);
-
         @Query(value = "SELECT 1 FROM statement_header sh WHERE processing_date = :processingDate AND product = :product AND variant = :variant and status <> 'SUCCESS' LIMIT 1", nativeQuery = true)
-        Integer findInvoicesNotProcessed(@Param("processingDate") Long date, @Param("product") Long product,
+        Integer findIfHasInvoicesToProcess(@Param("processingDate") Long date, @Param("product") Long product,
                         @Param("variant") Long variant);
 
 }
