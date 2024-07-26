@@ -1,4 +1,4 @@
-package com.rodrigo.batch_processing.config.createFile;
+package com.rodrigo.batch_processing.config.updateFileControl;
 
 import javax.sql.DataSource;
 
@@ -9,16 +9,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class FileControlWriter {
+public class UpdateFileControlWriter {
 
-  @Bean(name = "FileControlWriter")
+  @Bean(name = "UpdateFileControlWriter")
   public JdbcBatchItemWriter<FileControl> writer(DataSource dataSource) {
     var sql = """
-        INSERT INTO file_control (
-          product, variant, file_name, status, batch_number
-        ) VALUES (
-         :product, :variant, :fileName, :status, :batchNumber
-         )
+          UPDATE file_control SET
+            product = :product,
+            variant = :variant,
+            status = :status,
+            file_name = :fileName,
+            batch_number = :batchNumber
+          WHERE id = :id
         """;
     return new JdbcBatchItemWriterBuilder<FileControl>()
         .dataSource(dataSource)

@@ -26,12 +26,16 @@ public class BatchConfig {
   // private final CardTypeProcessor cardTypeProcessor;
 
   @Bean
-  public Job job(@Qualifier("CreateFileStep") Step createFileStep, @Qualifier("WriteFileStep") Step writeFileStep) {
+  public Job job(
+      @Qualifier("CreateFileStep") Step createFileStep,
+      @Qualifier("WriteFileStep") Step writeFileStep,
+      @Qualifier("UpdateFileControlStep") Step updateFileControlStep) {
     return jobBuilderFactory
         .get("job")
         .incrementer(new RunIdIncrementer())
         .start(createFileStep)
         .next(writeFileStep)
+        .next(updateFileControlStep)
         // .next(step2)
         .build();
   }

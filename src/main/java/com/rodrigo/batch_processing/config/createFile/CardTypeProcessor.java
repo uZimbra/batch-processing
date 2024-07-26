@@ -37,6 +37,7 @@ public class CardTypeProcessor implements ItemProcessor<CardType, FileControl> {
       var fileControl = FileControl.builder()
           .product(item.getProduct())
           .variant(item.getVariant())
+          .batchNumber(batchId)
           .fileName(FileUtils.fileName(item.getProduct(), item.getVariant(), batchId, processingDate.toString()))
           .status(StatusEnum.PROCESSING.toString())
           .build();

@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
-import org.springframework.batch.core.annotation.OnProcessError;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -24,6 +23,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class WriteFileProcessor implements ItemProcessor<Invoice, Invoice> {
+
   private final BalanceInfoRepository balanceInfoRepository;
 
   private Long batchId;
@@ -75,15 +75,11 @@ public class WriteFileProcessor implements ItemProcessor<Invoice, Invoice> {
       fileWriter.close();
 
     } catch (Exception ex) {
+      log.warn("Ocorreu um erro para processar a fatura: {}", item.getStatementHeader().getId(), ex);
       throw new WriteFileException("Fail to read or write file, " + ex.getMessage());
     }
 
     return item;
-  }
-
-  @OnProcessError
-  public void OnProcessError(@NonNull Invoice item, Exception ex) {
-    log.warn("Ocorreu um erro para processar a fatura: {}", item.getStatementHeader().getId(), ex);
   }
 
 }

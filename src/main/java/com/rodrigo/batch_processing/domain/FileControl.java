@@ -22,6 +22,7 @@ public class FileControl {
     private Long id;
     private Long product;
     private Long variant;
+    private Long batchNumber;
     private String fileName;
     private String status;
 
