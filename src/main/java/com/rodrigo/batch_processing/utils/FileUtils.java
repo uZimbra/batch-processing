@@ -44,7 +44,13 @@ public class FileUtils {
   }
 
   public static File[] listFilesInOutputDirectory() {
-    return new File(Paths.get("output").toFile().getAbsolutePath()).listFiles();
+    var path = Paths.get("output");
+
+    if (!path.toFile().exists()) {
+      path.toFile().mkdirs();
+    }
+
+    return new File(path.toFile().getAbsolutePath()).listFiles();
   }
 
 }
